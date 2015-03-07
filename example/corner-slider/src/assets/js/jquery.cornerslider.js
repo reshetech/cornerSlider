@@ -1,3 +1,7 @@
+/**
+ * ! jQuery.cornerSlider | (c) 2015 reshetech.co.il
+ */
+
 (function ($, document, window) {   
 $.fn.cornerSlider = function( options ) {
 
@@ -11,11 +15,11 @@ $.fn.cornerSlider = function( options ) {
         top                   : 6,
         speedEffect           : 300,
         cookieMinutesToExpiry : 15,
-		
-		// callback functions that the user can use.
-		onShow  : function(){},
-		onHide  : function(){},
-		onClose : function(){},
+        
+        // callback functions that the user can use.
+        onShow  : function(){},
+        onHide  : function(){},
+        onClose : function(){},
     }, options);
 
     
@@ -48,14 +52,14 @@ $.fn.cornerSlider = function( options ) {
             minutes = parseInt(minutes);
 
         minutes = (minutes>0)? minutes : null;
-		
-		if(minutes)
-		{
-			var date    = new Date();
-			date.setTime(date.getTime() + (minutes * 60 * 1000));
-			expires = '; expires=' + date.toGMTString();
-			document.cookie = name + '=' + value + expires + '; path=/';
-		}
+        
+        if(minutes)
+        {
+            var date    = new Date();
+            date.setTime(date.getTime() + (minutes * 60 * 1000));
+            expires = '; expires=' + date.toGMTString();
+            document.cookie = name + '=' + value + expires + '; path=/';
+        }
     }
 
 
@@ -91,7 +95,7 @@ $.fn.cornerSlider = function( options ) {
      * @return bool        - whether to show the element
      */
     function isAllowedCornerSlider(cookieName) {
-		
+        
         if(isValidCookie(cookieName)) return false;
 
         return true;
@@ -104,7 +108,7 @@ $.fn.cornerSlider = function( options ) {
      */ 
     function cornerSliderAppear(elem)  {
         elem.removeClass('hidden').addClass('shown').stop();
-    
+
         if(settings.directionEffect=='right')
         {
             elem.animate({'right' : settings.right},settings.speedEffect,function (){});
@@ -117,9 +121,9 @@ $.fn.cornerSlider = function( options ) {
         {
             elem.animate({'left' : settings.left},settings.speedEffect,function (){});
         }
-		
-		// Callback
-		settings.onShow.call(elem);
+        
+        // Callback
+        settings.onShow.call(elem);
     }
     
     
@@ -152,13 +156,13 @@ $.fn.cornerSlider = function( options ) {
                 elem.removeClass('shown').addClass('hidden');
             });
         }
-		
-		// Callback
-		if(close){
-		    settings.onClose.call(elem);
-		}else{
-		    settings.onHide.call(elem);
-		}
+        
+        // Callback
+        if(close){
+            settings.onClose.call(elem);
+        }else{
+            settings.onHide.call(elem);
+        }
     }
     
     
@@ -180,9 +184,9 @@ $.fn.cornerSlider = function( options ) {
         var winHeight    = parseInt(window.innerHeight);
         var h1           = scrollTopInt + winHeight ;
         var h2           = $(settings.elemToPresent).length==0 ? settings.showAtScrollingHeight : parseInt($(settings.elemToPresent).offset().top);
-
+        
         if( h1 > h2  )  {
-		
+        
             if(cornerSliderElem.hasClass('hidden') && isAllowedCornerSlider(cookieName))
             {
                 cornerSliderAppear(cornerSliderElem);
@@ -200,25 +204,28 @@ $.fn.cornerSlider = function( options ) {
         height    = cornerSliderElemHeight;
         direction = (settings.directionEffect == 'left' || settings.directionEffect == 'right')? settings.directionEffect : "bottom";
         
+        // The element needs to have a hidden class.
+        cornerSliderElem.addClass("hidden");
+        
         cornerSliderElem.css({'bottom': settings.bottom});
         
         if(direction == 'left')     
-            cornerSliderElem.css({'left': -width});
+            cornerSliderElem.css({'left': -width,'right':'auto'});
         else if(direction == 'right')
-            cornerSliderElem.css({'right': -width});
+            cornerSliderElem.css({'right': -width,'left':'auto'});
         else {
         
             if(direction=='bottom')
                 cornerSliderElem.css({'bottom': -height});
         
             if(settings.directionEffect == 'bottom left')
-                cornerSliderElem.css({'left': settings.left});
+                cornerSliderElem.css({'left': settings.left,'right': 'auto'});
             else if(settings.directionEffect == 'bottom center')
                 cornerSliderElem.css({'margin-right' : 'auto' , 'margin-left' : 'auto' , 'right' : 0 , 'left' : 0});
             else if(settings.directionEffect == 'bottom right')
-                cornerSliderElem.css({'right': settings.right});
+                cornerSliderElem.css({'right': settings.right,'left': 'auto'});
             else
-                cornerSliderElem.css({'right': settings.right});
+                cornerSliderElem.css({'right': settings.right,'left': 'auto'});
         }
     }());
 };
