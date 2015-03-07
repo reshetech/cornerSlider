@@ -169,11 +169,13 @@ $.fn.cornerSlider = function( options ) {
     /**
      * Hide the cornerSlider on clicking the 'close' element.
      */
-    cornerSliderElem.find('.close').on('click',function(){
-        cornerSliderDisAppear(cornerSliderElem,cornerSliderElemWidth,true);
+	function cornerSliderClose(){
+		cornerSliderElem.find('.close').on('click',function(){
+			cornerSliderDisAppear(cornerSliderElem,cornerSliderElemWidth,true);
 
-        setCookie(cookieName,cookieValue,settings.cookieMinutesToExpiry);
-    });
+			setCookie(cookieName,cookieValue,settings.cookieMinutesToExpiry);
+		});
+	}
     
     
     /**
@@ -186,7 +188,6 @@ $.fn.cornerSlider = function( options ) {
         var h2           = $(settings.elemToPresent).length==0 ? settings.showAtScrollingHeight : parseInt($(settings.elemToPresent).offset().top);
         
         if( h1 > h2  )  {
-        
             if(cornerSliderElem.hasClass('hidden') && isAllowedCornerSlider(cookieName))
             {
                 cornerSliderAppear(cornerSliderElem);
@@ -204,7 +205,17 @@ $.fn.cornerSlider = function( options ) {
         height    = cornerSliderElemHeight;
         direction = (settings.directionEffect == 'left' || settings.directionEffect == 'right')? settings.directionEffect : "bottom";
         
-        // The element needs to have a hidden class.
+        // add the closing div.
+		$('<div></div>', { 
+		text: "X",
+		class: "close",
+		}).prependTo(cornerSliderElem);
+		
+		// listen to the closing div
+		// after it was added to the dom.
+		cornerSliderClose();
+		
+		// The element needs to have a hidden class.
         cornerSliderElem.addClass("hidden");
         
         cornerSliderElem.css({'bottom': settings.bottom});
