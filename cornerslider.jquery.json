@@ -1,14 +1,17 @@
 {
     "name": "cornerslider",
     "title": "jQuery CornerSlider",
-    "description": "CornerSlider is a jQuery plugin that slides content in and out the page when the user scrolls down and up the page.",
+    "description": "A jQuery popup that slides the content in and out when the user scrolls down and up the page.",
     "keywords": [
-        "slider"
+		"modal",
+		"popup",
+		"ui",
+		"jquery-plugin"
     ],
     "version": "1.0.0",
     "author": {
         "name": "Yossef Benharosh",
-        "url": "http://reshetech.co.il/en/yossef-benharosh/resume/"
+        "url": "http://reshetech.co.il/en/yossef-benharosh/resume"
     },
     "maintainers": [
         {

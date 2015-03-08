@@ -1,0 +1,29 @@
+{
+  "name": "cornerslider",
+  "description": "A jQuery popup that slides the content in and out when the user scrolls down and up the page.",
+  "version": "1.0.0",
+  "keywords": [
+    "modal",
+    "popup",
+    "ui",
+    "jquery-plugin"
+  ], 
+  "author": {
+        "name" : "Yossef Benharosh",
+		"url"  : "http://reshetech.co.il/en/yossef-benharosh/resume",
+		"email": "support@reshetech.co.il"
+   },  
+  "main": "jquery.cornerslider.js",
+  "license": "MIT",
+  "homepage": "http://reshetech.co.il/en/jquery-plugins/corner-slider",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reshetech/cornerSlider.git"
+  },
+  "bugs": {
+    "url": "https://github.com/reshetech/cornerSlider/issues"
+  },
+  "dependencies": {
+		"jquery": ">=1.7"
+	} 
+}
