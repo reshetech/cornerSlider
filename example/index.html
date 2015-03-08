@@ -2,7 +2,35 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="corner-slider/assets/css/style.css">
+<style>
+#corner-slider {
+    position:fixed;
+    z-index:10000;
+	overflow:hidden;
+	
+	/*Change to your own dimensions*/
+	height:119px;
+	width:269px;
+	
+	/*Change to your own colors*/
+	border:1px solid #b3b3b3;
+	background:#efefef;
+}
+#corner-slider.hidden{
+    display:none;
+}
+#corner-slider .close{
+    position:absolute;
+	cursor:pointer;
+	font-size:16px;
+	display:inline-block;
+	z-index:1002;
+	
+	/*Change here the close button position*/
+	right:24px;
+	top:18px;
+}
+</style>
 </head>
 <body>
 <div class="content" style="width:1000px;margin:40px auto;font-family:helvetica,arial,sans-serif">
@@ -64,30 +92,16 @@
     
 </div>
 
-<div id="corner-slider" class="hidden">      
-    <div class="more-links-wrapper">
-        <div class="more-links-inner">
-            <h2 class="more-headline">Read more</h2>
-            <div class="links-wrapper">
-                <div class="more-img-wrapper fl">
-                    <div>
-                    <div style="width:90px;height:90px;background:#efefef"></div>
-                    </div>
-                </div>
-                <div class="read-more fl">
-                    <p><a href="">PHPenthusiast tutorials</a></p>
-                    <p><a href="">mySQL tutorials</a></p>
-                    <p><a href="">javascript tutorials</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="cb"></div>
+
+<!--cornerSlider starts-->
+<div id="corner-slider">      
+    <!--Your corner slider content goes here.-->  
 </div>
+<!--cornerSlider ends-->
 
 
 <script src="corner-slider/assets/js/jquery-1.10.2.min.js" charset="utf-8"></script>
-<script src="corner-slider/assets/js/jquery.cornerslider.min.js" charset="utf-8"></script>
+<script src="corner-slider/src/assets/js/jquery.cornerslider.js" charset="utf-8"></script>
 <script>
 (function($){
 $(document).ready(function () {
@@ -98,7 +112,7 @@ $(document).ready(function () {
         speedEffect           : 300,
 		right                 : 20,
 		bottom                : 20,
-        cookieMinutesToExpiry : 0.1,
+        cookieMinutesToExpiry : 1,
 		//onClose               : function() {
 		    //alert("Not to be seen again in the near future.");
 		//},
