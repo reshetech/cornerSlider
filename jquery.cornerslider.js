@@ -6,15 +6,26 @@
 $.fn.cornerSlider = function( options ) {
 
     var settings = $.extend({
+    	// where to show
         showAtScrollingHeight : 1300,
         elemToPresent         : "#presentSlider",
+        
+        // effect
         directionEffect       : "right",
+        speedEffect           : 300,
+        
+        // margin
         bottom                : 6,
         right                 : 6,
         left                  : 6,
         top                   : 6,
-        speedEffect           : 300,
-        cookieMinutesToExpiry : 15,
+        
+		// the 'cornerSliderHide' cookie is generated
+		// when a user chooses to close the slider 
+		cookieName            : 'csh',
+		cookieValue           : 'hidden',
+		cookieMinutesToExpiry : 15,
+        
         
         // callback functions that the user can use.
         onShow  : function(){},
@@ -31,14 +42,6 @@ $.fn.cornerSlider = function( options ) {
         cornerSliderElemWidth = cornerSliderElem.outerWidth(),
         cornerSliderElemHeight= cornerSliderElem.outerHeight(),
         direction             = "right";
-        
-    
-    /**
-     * The 'cornerSliderHide' cookie is generated 
-     * when a user chooses to close the slider 
-     */
-    var cookieName  = 'cornerSliderHide',
-        cookieValue = 'hidden';
 
         
     /**
@@ -52,14 +55,14 @@ $.fn.cornerSlider = function( options ) {
             minutes = parseInt(minutes);
 
         minutes = (minutes>0)? minutes : null;
-        
+
         if(minutes)
         {
             var date    = new Date();
             date.setTime(date.getTime() + (minutes * 60 * 1000));
             expires = '; expires=' + date.toGMTString();
             document.cookie = name + '=' + value + expires + '; path=/';
-        }
+        }       
     }
 
 
@@ -94,9 +97,9 @@ $.fn.cornerSlider = function( options ) {
      * @param  obj  string - the cookie name
      * @return bool        - whether to show the element
      */
-    function isAllowedCornerSlider(cookieName) {
+    function isAllowedCornerSlider() {
         
-        if(isValidCookie(cookieName)) return false;
+        if(isValidCookie(settings.cookieName)) return false;
 
         return true;
     }
@@ -173,7 +176,7 @@ $.fn.cornerSlider = function( options ) {
 		cornerSliderElem.find('.close').on('click',function(){
 			cornerSliderDisAppear(cornerSliderElem,cornerSliderElemWidth,true);
 
-			setCookie(cookieName,cookieValue,settings.cookieMinutesToExpiry);
+			setCookie(settings.cookieName,settings.cookieValue,settings.cookieMinutesToExpiry);
 		});
 	}
     
@@ -186,9 +189,9 @@ $.fn.cornerSlider = function( options ) {
         var winHeight    = parseInt(window.innerHeight);
         var h1           = scrollTopInt + winHeight ;
         var h2           = $(settings.elemToPresent).length==0 ? settings.showAtScrollingHeight : parseInt($(settings.elemToPresent).offset().top);
-        
+       
         if( h1 > h2  )  {
-            if(cornerSliderElem.hasClass('hidden') && isAllowedCornerSlider(cookieName))
+            if(cornerSliderElem.hasClass('hidden') && isAllowedCornerSlider(settings.cookieName))
             {
                 cornerSliderAppear(cornerSliderElem);
             }
