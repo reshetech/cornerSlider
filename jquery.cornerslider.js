@@ -22,7 +22,7 @@ $.fn.cornerSlider = function( options ) {
         
 		// the 'cornerSliderHide' cookie is generated
 		// when a user chooses to close the slider 
-		cookieName            : 'csh',
+		cookieName            : 'cornerSliderHide',
 		cookieValue           : 'hidden',
 		cookieMinutesToExpiry : 15,
         
@@ -35,13 +35,15 @@ $.fn.cornerSlider = function( options ) {
 
     
     /**
-     * The 'cornerSliderHide' element
-     * holds the html
+     * the 'cornerSlider' element
      */
-    var cornerSliderElem      = $(this),
-        cornerSliderElemWidth = cornerSliderElem.outerWidth(),
-        cornerSliderElemHeight= cornerSliderElem.outerHeight(),
-        direction             = "right";
+    var cornerSliderElem       = $(this),
+        cornerSliderElemWidth  = cornerSliderElem.outerWidth(),
+        cornerSliderElemHeight = cornerSliderElem.outerHeight(),
+        direction              = "right",
+	
+        // true if the user chooses to close the element.	
+		flagClose              = false;
 
         
     /**
@@ -67,7 +69,7 @@ $.fn.cornerSlider = function( options ) {
 
 
     /**
-     * @desc  check whether a cookie exists
+     * @desc   check whether a cookie exists
      * @param  string cName - the cookie name
      * @return bool         - whether the cookie exists 
      */    
@@ -93,11 +95,12 @@ $.fn.cornerSlider = function( options ) {
 
 
     /**
-     * @desc  checks whether to show the element
-     * @param  obj  string - the cookie name
-     * @return bool        - whether to show the element
+     * @desc   checks whether to show the element
+     * @return bool - whether to show the element
      */
     function isAllowedCornerSlider() {
+		
+		if(flagClose) return false;
         
         if(isValidCookie(settings.cookieName)) return false;
 
@@ -107,7 +110,7 @@ $.fn.cornerSlider = function( options ) {
 
     /**
      * @desc  display the element
-     * @param obj elem - the 'cornerSliderHide' object 
+     * @param obj elem - the 'cornerSlider' object 
      */ 
     function cornerSliderAppear(elem)  {
         elem.removeClass('hidden').addClass('shown').stop();
@@ -125,16 +128,16 @@ $.fn.cornerSlider = function( options ) {
             elem.animate({'left' : settings.left},settings.speedEffect,function (){});
         }
         
-        // Callback
+        // callback
         settings.onShow.call(elem);
     }
     
     
     /**
      * @desc  hide the element
-     * @param obj  elem     - the 'cornerSliderHide' object
-     * @param int  width    - the element width
-     * @param bool addClass - whether to add the class name hide to the element
+     * @param obj  elem  - the 'cornerSlider' object
+     * @param int  width - the element width
+     * @param bool close - whether the user chose to hide the element
      */
     function cornerSliderDisAppear(elem,width,close) {
         elem.stop();
@@ -160,7 +163,7 @@ $.fn.cornerSlider = function( options ) {
             });
         }
         
-        // Callback
+        // callbacks
         if(close){
             settings.onClose.call(elem);
         }else{
@@ -170,10 +173,13 @@ $.fn.cornerSlider = function( options ) {
     
     
     /**
-     * Hide the cornerSlider on clicking the 'close' element.
+     * hide the cornerSlider on clicking the 'close' element.
      */
 	function cornerSliderClose(){
 		cornerSliderElem.find('.close').on('click',function(){
+			
+			flagClose = true;
+			
 			cornerSliderDisAppear(cornerSliderElem,cornerSliderElemWidth,true);
 
 			setCookie(settings.cookieName,settings.cookieValue,settings.cookieMinutesToExpiry);
@@ -182,7 +188,7 @@ $.fn.cornerSlider = function( options ) {
     
     
     /**
-     * Hide or show the cornerSlider on window scroll.
+     * hide or show the cornerSlider on window scroll.
      */
     $(window).scroll(function() {
         var scrollTopInt = parseInt($(window).scrollTop());
@@ -201,7 +207,8 @@ $.fn.cornerSlider = function( options ) {
     });
     
     /**
-     * Motion directions and starting position.
+     * motion directions and starting position
+	 * are initialized here.
      */
     (function init(){
         width     = cornerSliderElemWidth;
