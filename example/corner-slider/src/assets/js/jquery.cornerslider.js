@@ -24,6 +24,7 @@ $.fn.cornerSlider = function( options ) {
 		// when a user chooses to close the slider 
 		cookieName            : 'cornerSliderHide',
 		cookieValue           : 'hidden',
+		cookieDomain          : '',
 		cookieMinutesToExpiry : 15,
         
         
@@ -53,17 +54,20 @@ $.fn.cornerSlider = function( options ) {
      * @param string minutes - the number of minutes to expiry
      */    
     function setCookie(name,value,minutes) {
-        var expires;
+        var expires,
+		    domain,
             minutes = parseInt(minutes);
 
         minutes = (minutes>0)? minutes : null;
 
         if(minutes)
         {
-            var date    = new Date();
+            domain = (settings.cookieDomain != '')? '; domain=.'+settings.cookieDomain : '';
+			
+			var date    = new Date();
             date.setTime(date.getTime() + (minutes * 60 * 1000));
             expires = '; expires=' + date.toGMTString();
-            document.cookie = name + '=' + value + expires + '; path=/';
+            document.cookie = name + '=' + value + expires + domain + '; path=/';
         }       
     }
 
